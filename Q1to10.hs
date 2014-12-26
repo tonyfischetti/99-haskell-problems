@@ -70,12 +70,27 @@ myButLast'''' = head . tail . reverse
 -----------------------------------------------------
 
 
+------------------------------------------------------------
+----- 3. Find the K'th element of a list. (1 indexed) ------
+------------------------------------------------------------
+kthel :: [xs] -> Int -> xs
+
+kthel [] _ = error "out of bounds"
+kthel xs 1 = head xs
+kthel (_:xs) n = kthel xs (n-1)
+
+kthel' xs n = xs !! n - 1
+------------------------------------------------------------
+------------------------------------------------------------
+
+
+
 
 main = do
         let ls = [1..5]
         let lsl = [1, 2, 3, 4, 5, 6, 5, 1, 2, 3]
         let wds = "haskell"
-        print (last' ls)
-        print (almost_last ls)
+        print (kthel lsl 8)
+        print (kthel' lsl 8)
 
 
