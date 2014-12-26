@@ -8,13 +8,13 @@ last' :: [xs] -> xs
 last' xs = head (reverse xs)
 
 -- with pattern matching
-last'' [] = error "No end for empty lists"
-last'' [x] = x
-last'' (_:xs) = last'' xs
+last'' []      = error "No end for empty lists"
+last'' [x]     = x
+last'' (_:xs)  = last'' xs
 
 -- with guards
 last''' (x:xs)
-    | null xs  = x
+    | null xs   = x
     | otherwise = last''' xs
     where len = length (x:xs)
 
@@ -26,7 +26,7 @@ myLast''' = head . reverse
 myLast'''' = foldl1 (curry snd)
 
 myLast''''' [] = error "No end for empty lists!"  
-myLast''''' x = x !! (length x -1)
+myLast''''' x  = x !! (length x -1)
 ------------------------------------------------------
 ------------------------------------------------------
 
@@ -36,10 +36,10 @@ myLast''''' x = x !! (length x -1)
 -----------------------------------------------------
 almost_last :: [xs] -> xs
 
-almost_last [] = error "empty list"
-almost_last (x:[]) = error "just one item"
+almost_last []        = error "empty list"
+almost_last (x:[])    = error "just one item"
 almost_last (x:xs:[]) = x
-almost_last (_:xs) = almost_last xs
+almost_last (_:xs)    = almost_last xs
 
 almost_last' xs = head (reverse (take 2 (reverse xs)))
 
@@ -47,9 +47,9 @@ almost_last' xs = head (reverse (take 2 (reverse xs)))
 almost_last'' xs = head $ reverse $ take 2  $ reverse xs
 
 almost_last''' (x:xs)
-    | null xs = error "just one item"
+    | null xs        = error "just one item"
     | length xs == 1 = x
-    | otherwise = almost_last''' xs
+    | otherwise      = almost_last''' xs
 
 -- point free style
 almost_last'''' = head . reverse . take 2  . reverse
@@ -75,9 +75,9 @@ myButLast'''' = head . tail . reverse
 ------------------------------------------------------------
 kthel :: [xs] -> Int -> xs
 
-kthel [] _ = error "out of bounds"
-kthel xs 1 = head xs
-kthel (_:xs) n = kthel xs (n-1)
+kthel [] _      = error "out of bounds"
+kthel xs 1      = head xs
+kthel (_:xs) n  = kthel xs (n-1)
 
 kthel' xs n = xs !! n - 1
 ------------------------------------------------------------
@@ -87,7 +87,7 @@ kthel' xs n = xs !! n - 1
 
 
 main = do
-        let ls = [1..5]
+        let ls  = [1..5]
         let lsl = [1, 2, 3, 4, 5, 6, 5, 1, 2, 3]
         let wds = "haskell"
         print (kthel lsl 8)
