@@ -16,7 +16,6 @@ last'' (_:xs)  = last'' xs
 last''' (x:xs)
     | null xs   = x
     | otherwise = last''' xs
-    where len = length (x:xs)
 
 -- other solutions from website
 myLast'' = foldr1 (flip const)
@@ -90,6 +89,7 @@ main = do
         let ls  = [1..5]
         let lsl = [1, 2, 3, 4, 5, 6, 5, 1, 2, 3]
         let wds = "haskell"
+        print (last lsl)
         print (kthel lsl 8)
         print (kthel' lsl 8)
 
