@@ -1,32 +1,5 @@
 
 
------------------- length --------------------
--- function definition
-length' :: [xs] -> Integer
-
--- using list comprehensions
-length' xs = sum [1 | _ <- xs]
-
--- using recursion
-length'' [] = 0
-length'' xs = 1 + length'' (tail xs)
-
--- using explicit if else
-length''' xs = if null xs
-               then 0
-               else 1 + length''' (tail xs)
-
--- using guards
-length'''' xs
-    | null xs = 0
-    | otherwise = 1 + length'''' (tail xs)
-
--- using pattern matching
--- length''''' (x:[]) = 1
-length''''' (x:[]) = 1
-length''''' (x:xs) =  1 + length''''' xs
-----------------------------------------------
-
 
 
 
