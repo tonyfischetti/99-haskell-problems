@@ -13,29 +13,29 @@ last' xs = head (reverse xs)
 
 -- with pattern matching
 -- .01s - .02s - .02s
-last'' []      = error "No end for empty lists"
-last'' [x]     = x
-last'' (_:xs)  = last'' xs
+last' []      = error "No end for empty lists"
+last' [x]     = x
+last' (_:xs)  = last' xs
 
 -- with guards
 -- .01s - .02s - .02s
-last''' (x:xs)
+last' (x:xs)
     | null xs   = x
-    | otherwise = last''' xs
+    | otherwise = last' xs
 
 -- other solutions from website
 -- .01s - .02s - .04s
-myLast'' = foldr1 (flip const)
+last' = foldr1 (flip const)
 
 -- .72s - 1.39s - 5.29s
-myLast''' = head . reverse
+last' = head . reverse
 
 -- .01s - .02s - .02s
-myLast'''' = foldl1 (curry snd)
+last' = foldl1 (curry snd)
 
 -- .7s - 1.4s - 7.96s
-myLast''''' [] = error "No end for empty lists!"  
-myLast''''' x  = x !! (length x - 1)
+last' [] = error "No end for empty lists!"  
+last' x  = x !! (length x - 1)
 
 -- REAL HASKELL SOLUTION IS TO USE last FUNCTION
 --
@@ -63,39 +63,39 @@ almost_last (x:xs:[]) = x
 almost_last (_:xs)    = almost_last xs
 
 -- .68s - 1.38s - 4.48s
-almost_last' xs = head (reverse (take 2 (reverse xs)))
+almost_last xs = head (reverse (take 2 (reverse xs)))
 
 -- with low precedence right-associative function applicator
 -- .74s - 1.35s - 4.94s
-almost_last'' xs = head $ reverse $ take 2  $ reverse xs
+almost_last xs = head $ reverse $ take 2  $ reverse xs
 
 -- takes way too long
-almost_last''' (x:xs)
+almost_last (x:xs)
     | null xs        = error "just one item"
     | length xs == 1 = x
-    | otherwise      = almost_last''' xs
+    | otherwise      = almost_last xs
 
 -- point free style
 -- takes way too long
-almost_last'''' = head . reverse . take 2  . reverse
+almost_last = head . reverse . take 2  . reverse
 
 -- other solutions from website
 -- .01s - .03s - .04
-myButLast = last . init
+almost_last = last . init
  
 -- .76s - 1.45s - 6.37s
-myButLast' x = reverse x !! 1
+almost_last x = reverse x !! 1
  
 -- .01s - .02s - .02s
-myButLast'' [x,_]  = x
-myButLast'' (_:xs) = myButLast'' xs
+almost_last [x,_]  = x
+almost_last (_:xs) = almost_last xs
  
 -- .01s - .02s - .02s
-myButLast''' (x:(_:[])) = x
-myButLast''' (_:xs) = myButLast''' xs
+almost_last (x:(_:[])) = x
+almost_last (_:xs) = almost_last xs
  
 -- .68s - 1.4s - 6.59s
-myButLast'''' = head . tail . reverse
+almost_last = head . tail . reverse
 
 -- THE REAL HASKELL SOLUTION IS TO USE last . init
 --
@@ -123,7 +123,7 @@ kthel xs 1      = head xs
 kthel (_:xs) n  = kthel xs (n-1)
 
 -- .01s - .01s - .01s
-kthel' xs n = xs !! (n - 1)
+kthel xs n = xs !! (n - 1)
 
 -- THE REAL HASKELL is to use the !! indexing operator
 --
@@ -146,52 +146,51 @@ length' xs = sum [1 | _ <- xs]
 
 -- using recursion
 -- CAUSES STACK OVERFLOW
-length'' [] = 0
-length'' xs = 1 + length'' (tail xs)
+length' [] = 0
+length' xs = 1 + length' (tail xs)
 
 -- using explicit if else
 -- CAUSES STACK OVERFLOW
-length''' xs = if null xs
-               then 0
-               else 1 + length''' (tail xs)
+length' xs = if null xs
+             then 0
+             else 1 + length' (tail xs)
 
 -- using guards
 -- CAUSES STACK OVERFLOW
-length'''' xs
+length' xs
     | null xs = 0
-    | otherwise = 1 + length'''' (tail xs)
+    | otherwise = 1 + length' (tail xs)
 
 -- using pattern matching
 -- CAUSES STACK OVERFLOW
-length''''' (x:[]) = 1
-length''''' (x:xs) = 1 + length''''' xs
+length' (x:[]) = 1
+length' (x:xs) = 1 + length' xs
 
 -- from the internet
 -- uses tail recursion
 -- .01s - .02s - .03s
-dafunc xs = len xs 0
+length' xs = len xs 0
     where len [] l = l
           len (x:xs) l = len xs (l+1)
-
 
 -- from the internet
 -- change all values to 1 and sum it
 -- .03s - .05s - .06s
-dafunc = sum . map (\_ -> 1)
+length' = sum . map (\_ -> 1)
 
 -- .02s - .03s - .03s
-dafunc xs = foldl step 0 xs where step acc x = acc + 1
+length' xs = foldl step 0 xs where step acc x = acc + 1
 
 -- equivalent to above but using lambda
 -- .01s - .03s - .05sj
-dafunc = foldl (\acc _ -> 1 + acc) 0
+length' = foldl (\acc _ -> 1 + acc) 0
 
 -- CAUSES STACK OVERFLOW
-dafunc =  foldr (\_ acc -> acc + 1) 0
+length' =  foldr (\_ acc -> acc + 1) 0
 
 -- strict version
 -- .01s - .03s - .04s
-dafunc = foldl' (\acc _ -> 1 + acc) 0
+length' = foldl' (\acc _ -> 1 + acc) 0
 
 -- the real solution is to use the length function
 --
