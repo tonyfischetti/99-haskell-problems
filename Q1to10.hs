@@ -125,12 +125,29 @@ kthel (_:xs) n  = kthel xs (n-1)
 -- .01s - .01s - .01s
 kthel xs n = xs !! (n - 1)
 
+-- .02s - .03s - .04s
+kthel xs n = last $ take n xs
+
+-- .02s - .03s - .04s
+-- MMmmmm, curry
+kthel2 n = last . take n
+kthel = flip kthel2
+
+-- above equivalent to
+kthel = flip (\n -> last . take n)
+
+-- .01s - .02s - .03s
+kthel2 n = head . drop (n - 1)
+kthel = flip dafunc2
+
 -- THE REAL HASKELL is to use the !! indexing operator
 --
 -- Performance notes:
     -- TCO pattern-matching is most performant
     -- but also as performant as '!!' indexing,
     -- in this case
+    --
+    -- head . drop is better that last . take
 ------------------------------------------------------------
 ------------------------------------------------------------
 
@@ -165,6 +182,9 @@ length' xs
 -- CAUSES STACK OVERFLOW
 length' (x:[]) = 1
 length' (x:xs) = 1 + length' xs
+
+-- .03s - .04s - .06s
+length' = fst . last . zip [1..]
 
 -- from the internet
 -- uses tail recursion

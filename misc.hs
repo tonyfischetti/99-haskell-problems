@@ -60,3 +60,11 @@ take' 1 (x:_) = [x]
 take' n (x:[]) = [x]
 take' n (x:xs) = x : take' (n-1) xs
 ---------------------
+
+
+pythag_triples = [(x,y,z) | x <- [1..100],
+                            y <- [1..x],
+                            z <- [1..50],
+                            x^2 + y^2 == z^2]
+
+main = print $ pythag_triples
