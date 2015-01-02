@@ -10,3 +10,4 @@ Q1to10
 .cabal-sandbox/
 cabal.sandbox.config
 cabal.config
+.DS_Store
