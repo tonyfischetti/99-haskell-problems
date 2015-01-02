@@ -1,6 +1,8 @@
 99-haskell-problems
 ===================
 
+![haskell kool aid](http://statethatiamin.onlythisrose.com/haskell-kool-aid.png)
+
 I got 99 problems,
 and learning Haskell is all of them.
 
