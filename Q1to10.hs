@@ -234,6 +234,41 @@ length' = foldl' (\acc _ -> 1 + acc) 0
 
 
 
+-------------------------------------------------------
+----------------- 5. Reverse a list ------------------
+-------------------------------------------------------
+
+reverse' :: (Num a) => [a] -> [a]
+
+-- takes too long
+reverse' [] = []
+reverse' (x:[]) = [x]
+reverse' xs = last xs : (reverse' (init xs))
+
+-- .00s - .01s - .01s
+reverse' = foldl' (\acc x -> x : acc) []
+
+-- .00s - .01s - .01s
+reverse' = foldl (flip (:)) []
+
+-- takes too long
+reverse' xs = foldr (\x acc -> acc ++ [x]) [] xs
+
+-- .01s - .02s - .04s
+reverse' xs = reverse'' xs []
+    where reverse'' [] ys = ys
+          reverse'' (x:xs) ys = reverse'' xs (x:ys)
+
+-- the real solution is to use the reverse function
+--
+-- performance notes:
+    -- The foldl (which I think are tail-recursive)
+    -- are really the only function that will work
+    -- with large lists. It is about as performant
+    -- as 'reverse'
+    -- The manual TCO version is very performant as well
+-------------------------------------------------------
+-------------------------------------------------------
 
 
 main = do
