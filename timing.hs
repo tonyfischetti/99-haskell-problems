@@ -13,7 +13,7 @@ dispatcher ["-c"] = print $ dafunc [1..99999999]
 
 main = getArgs >>= dispatcher
 
+dafunc xs = head (reverse xs)
 
-dafunc = fst . last . zip [1..]
 
 

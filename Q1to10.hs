@@ -8,7 +8,7 @@ import Data.List
 ------------------------------------------------------
 last' :: [xs] -> xs
 
--- .74s - .2.40s -  6.05s
+-- .74s - 2.40s -  6.05s
 last' xs = head (reverse xs)
 
 -- with pattern matching
@@ -22,6 +22,12 @@ last' (_:xs)  = last' xs
 last' (x:xs)
     | null xs   = x
     | otherwise = last' xs
+
+-- with case statements
+-- .02s - .03s - .04s
+last' xs = case xs of (x:[])   -> x
+                      (x:xs)   -> last' xs
+
 
 -- other solutions from website
 -- .01s - .02s - .04s
